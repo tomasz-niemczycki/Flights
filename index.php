@@ -1,7 +1,7 @@
 <?php
     $conn = mysqli_connect('localhost', 'root', '', 'spaceinc');
     $queryAll = "SELECT * FROM flights";
-    $queryShip = "SELECT * FROM flights WHERE ship = 'FALCON 9 BLOCK 5'";
+    $queryShip = 'SELECT * FROM flights WHERE ship = "FALCON 9 BLOCK 5"';
     
 ?>
 
@@ -18,7 +18,7 @@
         <form action="index.php" method="get">
             <label for="poll">Ship</label>
             <input type="radio" name="poll" id="poll">
-            <button type="submit">Check</button>
+            <button type="submit" name="submit">Check</button>
         </form>
     <table>
         <tr>
@@ -31,7 +31,8 @@
         </tr>
 <!--Script for showing results-->
         <?php
-            if(isset($input)) { 
+
+            if(isset($_GET['submit']) && isset($_GET['poll'])) { 
                 $resultShip = mysqli_query($conn, $queryShip);
              while($row = mysqli_fetch_array($resultShip)) { 
                 echo "<tr>"; 
@@ -55,7 +56,7 @@
                     echo "</td>"; 
                 echo "</tr>"; };
             }
-             else { 
+             else if(isset($_GET['submit'])) { 
                 $resultAll = mysqli_query($conn, $queryAll); 
                 while($row = mysqli_fetch_array($resultAll)) { 
                     echo "<tr>"; 
