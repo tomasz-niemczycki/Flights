@@ -3,6 +3,9 @@
     $queryAll = "SELECT * FROM flights";
     $queryShip = 'SELECT * FROM flights WHERE ship = "FALCON 9 BLOCK 5"';
     
+    $queryResults = [];
+
+    define('Message', "You need to choose something in order to show space flights")
 ?>
 
 <!DOCTYPE html>
@@ -16,12 +19,15 @@
 <body>
     <h1>Comming Flights:</h1>
         <form action="index.php" method="get">
+            <label for="all">All</label>
+            <input type="radio" name="poll" id="all" value='all'>
             <label for="poll">Ship</label>
-            <input type="radio" name="poll" id="poll">
+            <input type="radio" name="poll" id="poll1" value='ship'>
             <button type="submit" name="submit">Check</button>
         </form>
     <table>
         <tr>
+            <th>Mission</th>
             <th>Type</th>
             <th>Payload</th>
             <th>Date</th>
@@ -31,55 +37,69 @@
         </tr>
 <!--Script for showing results-->
         <?php
+    
+    if($_GET['poll'] == 'all') {
+        $_GET['poll'] = $queryResults;
+        if(isset($_GET['poll']) || isset($_GET['submit'])) {
+            $resultAll = mysqli_query($conn, $queryAll);
+        
+        while($row = mysqli_fetch_array($resultAll)) { 
+            echo "<tr>"; 
+                echo "<td>"; 
+                    echo $row[1] . " "; 
+                echo "</td>"; 
+                echo "<td>"; 
+                    echo $row[2] . " "; 
+                echo "</td>";
+                echo "<td>"; 
+                    echo $row[3] . " "; 
+                echo "</td>"; 
+                    echo "<td>"; 
+                echo $row[4] . " "; 
+                    echo "</td>"; 
+                echo "<td>"; 
+                    echo $row[5] . " "; 
+                echo "</td>"; 
+                echo "<td>"; 
+                    echo $row[6] . " "; 
+                echo "</td>"; 
+                echo "<td>"; 
+                    echo $row[7] . " "; 
+                echo "</td>"; 
+            echo "</tr>"; };
+    }
+}
 
-            if(isset($_GET['submit']) && isset($_GET['poll'])) { 
-                $resultShip = mysqli_query($conn, $queryShip);
-             while($row = mysqli_fetch_array($resultShip)) { 
-                echo "<tr>"; 
+else if($_GET['poll'] == 'ship') {
+    $_GET['poll'] = $queryResults;
+    if(isset($_GET['poll']) || isset($_GET['submit'])) {
+        $resultShip = mysqli_query($conn, $queryShip);
+        while($row = mysqli_fetch_array($resultShip)) { 
+            echo "<tr>"; 
+                echo "<td>"; 
+                    echo $row[1] . " "; 
+                echo "</td>"; 
+                echo "<td>"; 
+                    echo $row[2] . " "; 
+                echo "</td>";
+                echo "<td>"; 
+                    echo $row[3] . " "; 
+                echo "</td>"; 
                     echo "<td>"; 
-                        echo $row[1] . " "; 
+                echo $row[4] . " "; 
                     echo "</td>"; 
-                    echo "<td>"; 
-                        echo $row[2] . " "; 
-                    echo "</td>";
-                    echo "<td>"; 
-                        echo $row[3] . " "; 
-                    echo "</td>"; 
-                        echo "<td>"; 
-                    echo $row[4] . " "; 
-                        echo "</td>"; 
-                    echo "<td>"; 
-                        echo $row[5] . " "; 
-                    echo "</td>"; 
-                    echo "<td>"; 
-                        echo $row[6] . " "; 
-                    echo "</td>"; 
-                echo "</tr>"; };
-            }
-             else if(isset($_GET['submit'])) { 
-                $resultAll = mysqli_query($conn, $queryAll); 
-                while($row = mysqli_fetch_array($resultAll)) { 
-                    echo "<tr>"; 
-                        echo "<td>"; 
-                            echo $row[1] . " "; 
-                        echo "</td>"; 
-                        echo "<td>"; 
-                            echo $row[2] . " "; 
-                        echo "</td>";
-                        echo "<td>"; 
-                            echo $row[3] . " "; 
-                        echo "</td>"; 
-                            echo "<td>"; 
-                        echo $row[4] . " "; 
-                            echo "</td>"; 
-                        echo "<td>"; 
-                            echo $row[5] . " "; 
-                        echo "</td>"; 
-                        echo "<td>"; 
-                            echo $row[6] . " "; 
-                        echo "</td>"; 
-                    echo "</tr>"; };
-            }
+                echo "<td>"; 
+                    echo $row[5] . " "; 
+                echo "</td>"; 
+                echo "<td>"; 
+                    echo $row[6] . " "; 
+                echo "</td>"; 
+                echo "<td>"; 
+                    echo $row[7] . " "; 
+                echo "</td>"; 
+            echo "</tr>"; };
+    }
+}
         ?>
     </table>
 </body>
