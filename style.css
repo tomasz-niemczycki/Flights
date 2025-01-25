@@ -11,9 +11,11 @@ body {
     margin-top: 200px;
     align-items: center;
     gap: 100px;
+    background-color: #333;
+    color: #fff;
 }
 
-table, th, tr, td {
+table, th, td {
     border: 1px solid #000;
 }
 

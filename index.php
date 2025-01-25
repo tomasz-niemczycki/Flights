@@ -5,7 +5,7 @@
     
     $queryResults = [];
 
-    define('Message', "You need to choose something in order to show space flights")
+    define('Message', "You need to choose something in order to show space flights");
 ?>
 
 <!DOCTYPE html>
@@ -23,27 +23,34 @@
             <input type="radio" name="poll" id="all" value='all'>
             <label for="poll">Ship</label>
             <input type="radio" name="poll" id="poll1" value='ship'>
+            <input type="text" name="text" id="text">
             <button type="submit" name="submit">Check</button>
         </form>
     <table>
-        <tr>
-            <th>Mission</th>
-            <th>Type</th>
-            <th>Payload</th>
-            <th>Date</th>
-            <th>Window</th>
-            <th>Ship</th>
-            <th>Propability</th>
-        </tr>
 <!--Script for showing results-->
         <?php
+
+if(!isset($_GET['poll']) && isset($_GET['submit'])) {
+    echo Message;
+}
     
-    if($_GET['poll'] == 'all') {
+   else if($_GET['poll'] == 'all') {
         $_GET['poll'] = $queryResults;
         if(isset($_GET['poll']) || isset($_GET['submit'])) {
             $resultAll = mysqli_query($conn, $queryAll);
         
         while($row = mysqli_fetch_array($resultAll)) { 
+
+            echo "<tr>";
+                echo "<th>Mission</th>";
+                echo "<th>Type</th>";
+                echo "<th>Payload</th>";
+                echo "<th>Date</th>";
+                echo "<th>Window</th>";
+                echo "<th>Ship</th>";
+                echo "<th>Propability</th>";
+            echo "</tr>";    
+                
             echo "<tr>"; 
                 echo "<td>"; 
                     echo $row[1] . " "; 
@@ -75,6 +82,17 @@ else if($_GET['poll'] == 'ship') {
     if(isset($_GET['poll']) || isset($_GET['submit'])) {
         $resultShip = mysqli_query($conn, $queryShip);
         while($row = mysqli_fetch_array($resultShip)) { 
+
+        echo "<tr>";
+            echo "<th>Mission</th>";
+            echo "<th>Type</th>";
+            echo "<th>Payload</th>";
+            echo "<th>Date</th>";
+            echo "<th>Window</th>";
+            echo "<th>Ship</th>";
+            echo "<th>Propability</th>";
+        echo "</tr>";    
+
             echo "<tr>"; 
                 echo "<td>"; 
                     echo $row[1] . " "; 
